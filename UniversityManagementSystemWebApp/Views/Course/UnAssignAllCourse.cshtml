@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "UnAssignAllCourse";
+    string message = ViewBag.message;
+}
+
+@if (message == "yes")
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong>  All Courses have been unassigned.
+    </div>
+}
+else if (message == "no")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> Course UnAssigning Failed
+    </div>
+}
+
+<style>
+    .button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: firebrick;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+        .button:hover {
+            background-color: #df2a32;
+        }
+
+        .button:active {
+            background-color: #af060d;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+</style>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "unassignForm", @style = "margin-top: 72px;" }))
+{
+    <div style="margin-left: 425px;">
+        <h2>Unassign All Course</h2>
+        <div style="width: 180px; height: 99px; margin-left: 49px; ">
+            <button class="button" type="submit" onclick="return Assure()">Unassign</button>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        function Assure() {
+            return confirm("Are you sure about unassigning all courses? The action can not be reversed");
+        }
+    </script>
+}

@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "CourseEnrollment";
+
+    List<SelectListItem> students = ViewBag.Students;
+    string message = ViewBag.message;
+
+
+}
+
+@model  UniversityManagementSystemWebApp.Models.CourseEnrollment
+<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+
+@if (message == "yes")
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> Student successfully enrolled in course.
+    </div>
+}
+else if (message == "no")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> Student Enrollent in the selected course failed.
+    </div>
+}
+else if (message == "conflict")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Warning!</strong> Student already enrolled in selected course.
+    </div>
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "FromEnroll" }))
+{
+    <div style="margin-left: 425px;">
+        <h1 style="font-size: 25px;">Enroll In a Course</h1>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.StudentId)
+            @Html.DropDownListFor(m => m.StudentId, new SelectList(students, "Value", "Text"), "-- Select Student --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.StudentId)
+
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="studentName">Name</label>
+            <input class="form-control" id="studentName" name="studentName" type="text" disabled="disabled" />
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="studentEmail">Email</label>
+            <input class="form-control" id="studentEmail" name="studentEmail" type="text" disabled="disabled" />
+        </div>
+
+        <div class="form-group">
+
+            <label for="studentDept">Department</label>
+            <input class="form-control" id="studentDept" name="studentDept" type="text" value="" disabled="disabled" />
+        </div>
+
+        <div class="form-group">
+
+            <label for="CourseId">Select Course :</label>
+            <select class="form-control disabled" id="CourseId" name="CourseId"></select>
+
+        </div>
+
+
+
+
+        <div class="form-group">
+
+
+            @Html.LabelFor(m => m.EnrollDate)
+            @Html.TextBoxFor(m => m.EnrollDate, new { @class = "form-control", @placeholder = "Pick a Date", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.EnrollDate)
+        </div>
+
+
+
+
+
+        <button type="submit" class="btn btn-primary" value="save" style="width: 100px;">Enroll</button>
+    </div>
+
+}
+
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#FromEnroll").validate({
+                rules: {
+                    StudentId: "required",
+                    CourseId: "required",
+                    EnrollDate: "required"
+                },
+                messages: {
+                }
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#EnrollDate').datepicker({ dateFormat: 'dd/MM/yy' }).val();
+            $('#EnrollDate').datepicker('setDate', new Date());
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+                var studentId = $("#StudentId").val();
+                $("#studentName").val("");
+                $("#studentEmail").val("");
+                $("#studentDept").val("");
+                $("#CourseId").empty();
+                var json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetStudentById',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#studentName").val(value.Name);
+                            $("#studentEmail").val(value.Email);
+                            $("#studentDept").val(value.DeptName);
+                        });
+                    }
+                });
+                json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetCourseThatCanBeTakenByStudentId',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#CourseId").append('<option value="">--Select a Course--</option>');
+                        $.each(data, function (key, value) {
+                            $("#CourseId").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

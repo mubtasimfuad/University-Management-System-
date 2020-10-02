@@ -1,0 +1,91 @@
+﻿@model UniversityManagementSystemWebApp.Models.Department
+
+@{
+    ViewBag.Title = "Save ";
+    string message = ViewBag.message;
+    string code = ViewBag.code;
+    string name = ViewBag.name;
+}
+<body >
+
+    @if (message == "Saved")
+    {
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+
+            <strong>Success!</strong> Department Save Successfully.
+        </div>
+    }
+    else if (message == "Saving Failed")
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failed!</strong> Save Failed.
+        </div>
+    }
+    else if (message == "Code Not Unique")
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failed!</strong> "@code" already have in your Department list.
+        </div>
+    }
+    else if (message == "Name Not Unique")
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failed!</strong> "@name" already have in your Department list.
+        </div>
+    }
+    else if (message == "Note: 1. Code must contain atleast 2 or upto 6 digit /n 2.Code Name can't be empty")
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failed!</strong><br /> Note:<br />
+            1. Code must contain atleast 2 or upto 7 digit <br />
+        </div>
+    }
+
+
+
+
+    @using (Html.BeginForm())
+    {
+        <div style="margin-left: 425px;">
+            <h1 style="font-size: 25px;">Save Department</h1>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Code)
+                @Html.TextBoxFor(m => m.Code, new { @class = "form-control", @placeholder = "Ex: CSE" })
+                @Html.ValidationMessageFor(m => m.Code)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @placeholder = "Ex: Computer Science & Engineering"})
+                @Html.ValidationMessageFor(m => m.Name)
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary" value="save">Save</button>
+        </div>
+    }
+</body>
+
+    @section scripts
+{
+
+        <script src="~/Scripts/jquery-3.1.0.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    }
+
+   

@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IIUC Students Panel - SWP Log In</title>
+    <link rel="shortcut icon" href="template/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="template/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" media="all" href="template/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="template/style_uwp.css" />
+</head>
+<body class="home blog livecss">
+    <div id="header-panel">
+        <div class="page">
+            <div id="header">
+                <div class="header-top">
+                    <div class="language">
+                        <ul class="lang-list"></ul><!--lang-list end-->
+                    </div><!--language end-->
+                    <div class="loginrss">
+                        <ul class="logrss-list">
+                            <li><a href="http://www.iiuc.ac.bd/">IIUC Home</a></li>
+                        </ul>
+                    </div><!--loginrss end-->
+                    <div class="clear"></div>
+                </div><!--header-top end-->
+                <div class="clear"></div>
+                <div class="header-main">
+                    <a class="logo" href="#"></a>
+                    <div id="ms-bg">
+                        <div id="main-menu">
+                            <div class="menu-header">
+
+                                <ul><li id="menu-item-615" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-615"><a href='' class="sf-with-ul">Log In</a></li></ul>
+                            </div>
+                        </div><!--main-menu end-->
+                        <div id="search">
+                        </div><!--search end-->
+                        <div class="clear"></div>
+                    </div><!--ms-bg end-->
+                </div><!--header-main end-->
+            </div><!--header end-->
+        </div><!--page end-->
+    </div><!--header-panel-->
+    <div class="page">
+        <div class="clear"></div>
+        <div id="Content-fullwidth">
+            <div id="uwp-cleMain">
+                <div id="uwp-user"></div>
+                <div id="uwp-filter-info">
+                    <table class="uwp-content" cellpadding="2" cellspacing="2" style="border-collapse: collapse; border-width: 0" width="100%">
+                        <tr><td style="text-align: center;"><h3>Welcome to IIUC Student Web Panel (SWP)</h3></td></tr>
+                    </table>
+                </div>
+                <div id="rest">
+                    <div class="uwp-prop"></div>
+                    <div id="msgBar"></div>
+                    <div id="cleContent">
+                        <form method="POST" action="/index.php">
+                            <table class="login" cellpadding="2" cellspacing="2" style="border-collapse: collapse" align="center" width="300" height="200">
+                                <tr>
+                                    <td width="100%" colspan="3">
+                                        <p align="center">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" colspan="3"><center><font size=2 face=tahoma><marquee behavior=alternate><p><b><p><b>Please enter your Log-in Information.</b><p><p><b></b></b></marquee></font></center></td>
+                                </tr>
+                                <tr>
+                                    <td width="24%"><b><font face="Arial">Student-ID</font></b></td>
+                                    <td width="6%"><b><font face="Arial">:</font></b></td>
+                                    <td width="70%"><input type="text" name="studentID" size="20" maxlength="9" class=class1 style="text-transform:uppercase;"></td>
+                                </tr>
+                                <tr>
+                                    <td width="24%"><b><font face="Arial">Password</font></b></td>
+                                    <td width="6%"><b><font face="Arial">:</font></b></td>
+                                    <td width="70%"><input type="password" name="password" size="20" maxlength="20" class=class1></td>
+                                </tr>
+
+                                <tr>
+                                    <td width="100%" colspan="3">
+                                        <!--<center><font size=2 face=tahoma><marquee BEHAVIOR=alternate><p><b>Please enter your Log-in Information.</b><p></marquee></font></center>
+                                        <br /> -->
+                                        <center><input type="submit" size="30" value="Log-in" class=class1><input type='button' onclick='javascript:window.close();' value='close' class=class1></center>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" width="100%" colspan="3" class="uwp-info">
+                                        Forgot your password?
+                                        <a class="uwp-label" href="forgotPassword.php">Click Here</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+
+                        <table class="uwp-noborder" cellpadding="2" cellspacing="2" style="border-collapse: collapse; border-width: 0" width="90%">
+                            <!--<tr><td><h3> Attention : Student who have finished Registration, Click your profile and see the registartion status:Confirmed or Pending if pending, contact your advisor for confirmation. Also, any ADD/DROP will be conducted by CoE,IIUC as per schedule in the Academic Calendar at <a href="https://www.iiuc.ac.bd/academic/academic-calendar-2/academic-calendar/">Academic Calendar Spring 2016</a></h3></td></tr>
+                            <!--<tr><td><h3> Attention : MBA EMBA MBM Registration Schedule for Spring 2016 <a href="notices\spring-16\MBA-MBM-Reg-Schedule-Spring16.pdf"> Read the Notice for MBA EMBA MBM (Spring 2016)</a></h3></td></tr>
+                            <tr><td><h3> Attention : Undergraduate Registration Schedule for Spring 2016 <a href="Reg-schedule-1st-sem-Spring16.pdf"> Read the Notice undergraduate programs</a></h3></td></tr>
+                            <tr><td><h3> Attention : Strudent's of MBA EMBA MBM <a href="notices\spring-16\notice for mba & mbm.pdf"> Read the Notice Payment Clearance on Friday</a></h3></td></tr>
+                            <tr><td><h3> Attention : First Semester Collect your Password from Dept. Office. Rest of you <a href="password-retrieve-how-to.pdf"> Read Password-How-To</a></h3></td></tr>
+                            <tr><td align="center"><h3> Attention :<a href="#" target="_blank"> 1st Semester Registration running now. <br/>2nd Semester to on-ward registration for current semster will be open soon<br/>Registration URL(Admitted Current Semester): https://iiuc.ac.bd/login</a></h3></td></tr>-->
+                        </table>
+
+
+                    </div>
+                </div>
+            </div><div class="clear"></div>
+        </div>
+        <!--content end-->
+        <div id="footer">
+            <div class="box986-top">
+                <div class="box986-bottom">
+                    <div class="box986-mid">
+                        <div class="footer-widget-section">
+                            <div class="clear"></div>
+                        </div><!--footer-widget end-->
+                    </div><!--box-487-mid end-->
+                    <div class="copyright-social">
+                        <div class="copyright">
+                            <p>
+                                Copyright © 2016
+                                <a href="./International Islamic University Chittagong_files/International Islamic University Chittagong.htm">IIUC</a>
+                                | All Rights Reserved
+                            </p>
+                        </div><!--copyright end-->
+                        <div class="counter">
+                            <div class="footer-widget-5">
+                                <div class="textwidget">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social">
+                            <p>
+                                System developed by:
+                                <a href="http://www.vpcsbd.com">ValuePLUS Computer Systems Ltd.</a>
+                            </p>
+                        </div><!--social end-->
+                        <div class="clear"></div>
+                    </div><!--copyright-social end-->
+                </div><!--box-487-bottom end-->
+            </div><!--box-487-top end-->
+        </div><!--footer end-->
+        <!--stats_footer_test-->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Register";
+    List<SelectListItem> selectListItemsDeparItems = ViewBag.departments;
+    string message = ViewBag.message;
+
+}
+
+@model UniversityManagementSystemWebApp.Models.Student
+<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+@if (message == "yes")
+{
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> '@ViewBag.name' Save Successfully.
+        <br />
+        <table>
+            <tr>
+                <td>Registration No</td>
+                <td>: @ViewBag.RegNo</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>: @ViewBag.name</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>: @ViewBag.Email</td>
+            </tr>
+            <tr>
+                <td>Contact No</td>
+                <td>: @ViewBag.ContactNo</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>: @ViewBag.Address</td>
+            </tr>
+            <tr>
+                <td>Registration Date</td>
+                <td>: @ViewBag.RegDate</td>
+            </tr>
+            <tr>
+                <td>Department</td>
+                <td>: @ViewBag.DeptName</td>
+            </tr>
+        </table>
+    </div>
+
+}
+else if (message == "Email Not Unique")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> "@ViewBag.Email" already have in your Student list.
+    </div>
+}
+
+
+
+@using (Html.BeginForm())
+{
+    <div style="margin-left: 425px;">
+        <h1 style="font-size: 25px;">Student Registration</h1>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "", @placeholder = "Name" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.ContactNo)
+            @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @placeholder = "Contact Number" })
+            @Html.ValidationMessageFor(m => m.ContactNo)
+        </div>
+
+
+
+        <div class="form-group">
+
+
+            @Html.LabelFor(m => m.Address)
+            @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+            @Html.ValidationMessageFor(m => m.Address)
+        </div>
+
+        @*<div class="form-group input-group-sm">
+                @Html.LabelFor(model => model.RegDate)
+                @Html.EditorFor( model => model.RegDate, new{htmlAttributes = new {@class = "form-control datecontrol", PlaceHolder = "Enter Date of Birth"}})
+                @Html.ValidationMessageFor(model => model.RegDate)
+            </div>*@
+
+
+        <div class="form-group">
+
+
+            @Html.LabelFor(m => m.RegDate)
+            @Html.TextBoxFor(m => m.RegDate, new { @class = "form-control", @placeholder = "Pick a Date", @readonly = "readonly" })
+            @Html.ValidationMessageFor(m => m.RegDate)
+        </div>
+
+        @* <input type="text" id="RegDate"/>*@
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.DepartmentId)
+            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(selectListItemsDeparItems, "Value", "Text"), "-- Select Department --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DepartmentId)
+
+        </div>
+
+
+        <button class="btn btn-primary" value="save" style="width: 110px;">Register</button>
+    </div>
+
+}
+
+
+@section scripts
+{
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#RegDate').datepicker({ dateFormat: 'dd/MM/yy' }).val();
+            $('#RegDate').datepicker('setDate', new Date());
+        });
+    </script>
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    @*<script src="~/Scripts/jquery-ui-1.12.0.js"></script>*@
+}

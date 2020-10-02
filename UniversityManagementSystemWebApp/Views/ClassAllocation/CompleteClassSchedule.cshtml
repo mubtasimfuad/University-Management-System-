@@ -1,0 +1,84 @@
+﻿@using UniversityManagementSystemWebApp.Models
+
+@{
+    ViewBag.Title = "CompleteClassSchedule";
+    List<Department> departments = ViewBag.Departments;
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "assignForm", @style = "margin-top: 72px;" }))
+{
+    <div>
+        <h1 style="font-size: 25px; text-align: center;">Complete Class Schedule</h1>
+
+        <div class="form-group" style="margin-left: 411px;">
+
+            <label for="DepartmentId">Department :</label>
+            <select id="DepartmentId" name="DepartmentId" class="form-control" style="width: 273px;">
+                <option selected disabled>--Choose Department--</option>
+                @foreach (Department aDepartment in departments)
+                {
+                    <option value="@aDepartment.Id">@aDepartment.Name</option>
+                }
+            </select>
+
+        </div>
+
+        <table id="" class="display table table-bordered table-hover">
+            <thead>
+                <tr class="table-danger">
+                    <th style="width: 150px;">Course Code</th>
+                    <th style="width: 350px;">Course Name</th>
+                    <th>Info</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-dark" id="tableBody"></tbody>
+
+        </table>
+
+
+    </div>
+
+}
+@section scripts
+{
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $("#DepartmentId").change(function () {
+                var deptId = $("#DepartmentId").val();
+                $("#tableBody").empty();
+                var json = { departmentId: deptId };
+                $.ajax({
+                    type: "POST",
+                    url: '/ClassAllocation/GetClassScheduleByDeptId',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#tableBody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.Info + '</td></tr>');
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+
+
+
+}
+
+
+
+

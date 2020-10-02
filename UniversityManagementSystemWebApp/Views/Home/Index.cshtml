@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet"/>
+<style>
+    .button {
+        display: inline-block;
+        padding: 25px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #312D2D;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+        .button:hover {
+            background-color: blue;
+        }
+
+        .button:active {
+            background-color: #CAB7B7;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    table#albums {
+        border-collapse: separate;
+        border-spacing: 85px 30px;
+    }
+</style>
+    <ul >
+        <li><img width="100%" height="300" src="~/images/bitm.png" alt="&quot;Academic building &quot;" /></li>
+    </ul>
+
+<div class="jumbotron">
+
+    <marquee bgcolor="#000000" scrollamount="15">
+        <h2 style="font-size: 60px; color: yellowgreen">Welcome To BITM University !</h2></marquee>
+</div>
+
+    <div align="center">
+        <
+        <table  id="albums">
+            <tr>
+                <td>
+                    <div >
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("Save", "Department")'">Save Department</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("ShowDepartment", "Department")'">View Department</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("Save", "Course")'">Save Course</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("CourseDetails", "Course")'">Course Details</button>
+                        </div>
+                    </div>
+                </td>
+               
+            </tr>
+
+
+
+            <tr>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("Save", "Teacher")'">Save Teacher</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("Assign", "Teacher")'">Teacher Course <br/> Assign</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("Register", "Student")'">Register Student</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("CourseEnrollment", "Student")'"> Enroll A Course</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("SaveResult", "Student")'">Save Result</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("ViewResult", "Student")'"> View Result</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("AllocateClassrooms", " ClassAllocation")'">Allocate Classroom</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div style="width: 300px; height:180px;">
+                            <button class="button" type="submit" onclick="window.location = '@Url.Action("CompleteClassSchedule", " ClassAllocation")'"> Class Schedule </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    
+</div>
+
+
+<script>
+function departmentSaveClick(){
+    document.location = 'Department/Save';
+}
+</script>
+    <script src="~/Scripts/image_slide.js"></script>

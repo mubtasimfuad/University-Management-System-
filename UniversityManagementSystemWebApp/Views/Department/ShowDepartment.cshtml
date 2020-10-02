@@ -1,0 +1,49 @@
+﻿@using UniversityManagementSystemWebApp.Models
+@model List<Department>
+
+@{
+    ViewBag.Title = "title";
+    List<Department> departments = ViewBag.departments;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>University Course Management System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+        <body>
+
+            <div class="container">
+               
+                <h2 style="text-align: center">All Department List</h2>
+                <div style="margin: 60px auto; margin-top: 109px;">
+
+                    <table class="table table-hover" id="dataTable">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Code</th>
+                                <th>Name</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (Department aDepartment in departments)
+{
+    <tr class="table-dark">
+        <td>@aDepartment.Code</td>
+        <td>@aDepartment.Name</td>
+    </tr>
+}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </body>
+</html>

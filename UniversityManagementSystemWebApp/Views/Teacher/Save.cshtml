@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Save";
+    List<SelectListItem> selectListItemsDeparItems = ViewBag.departments;
+    List<SelectListItem> selectListItemsDesignations = ViewBag.designations;
+    string message = ViewBag.message;
+}
+@model UniversityManagementSystemWebApp.Models.Teacher
+
+
+
+@if (message == "yes")
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> '@ViewBag.teacherName' Save Successfully.
+    </div>
+}
+else if (message == "Email Not Unique")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> '@ViewBag.email' already have in your Teacher list.
+    </div>
+}
+
+
+@using (Html.BeginForm())
+{
+    <div style="margin-left: 425px;">
+        <h1 style="font-size: 25px;">Save Teacher</h1>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "", @placeholder = "Name" })
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div class="form-group">
+
+
+            @Html.LabelFor(m => m.Address)
+            @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+            @Html.ValidationMessageFor(m => m.Address)
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "abc@domain.com" })
+            @Html.ValidationMessageFor(m => m.Email)
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.ContactNo)
+            @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @placeholder = "Contact Number" })
+            @Html.ValidationMessageFor(m => m.ContactNo)
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Designation)
+            @Html.DropDownListFor(m => m.Designation, new SelectList(selectListItemsDesignations, "Value", "Text"), "-- Select Designation --", new {@class="custom-select", @style = "margin-left: 28px; width: 175px , height: 60px" })
+            @Html.ValidationMessageFor(m => m.Designation)
+
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.DepartmentId)
+            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(selectListItemsDeparItems, "Value", "Text"), "-- Select Department --", new { @class = "custom-select", @style = "margin-left: 28px;  width: 175px , height: 60px" })
+            @Html.ValidationMessageFor(m => m.Designation)
+            -++++++++ })
+            @Html.ValidationMessageFor(m => m.DepartmentId)
+
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.CreditLimit)
+            @Html.TextBoxFor(m => m.CreditLimit, new { @class = "form-control", @placeholder = "Total Cradit Taken" })
+            @Html.ValidationMessageFor(m => m.CreditLimit)
+        </div>
+
+        <button type="submit" class="btn btn-outline-success" value="save" style="width: 100px;">Save</button>
+    </div>
+
+}
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+}

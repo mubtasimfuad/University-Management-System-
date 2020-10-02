@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "ViewResult";
+    List<SelectListItem> students = ViewBag.Students;
+}
+
+
+
+@model UniversityManagementSystemWebApp.Models.CourseEnrollment
+<link type="text/css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div style="margin-left: 425px;">
+            <h1 style="font-size: 25px;">View Result</h1>
+
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.StudentId)
+                @Html.DropDownListFor(m => m.StudentId, new SelectList(students, "Value", "Text"), "-- Select Student --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.StudentId)
+
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="studentName">Name</label>
+                <input id="studentName" name="studentName" type="text" class="form-control" disabled="disabled" />
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="studentEmail">Email</label>
+                <input id="studentEmail" name="studentEmail" type="text" class="form-control" disabled="disabled" />
+            </div>
+
+            <div class="form-group">
+
+                <label for="studentDept">Department</label>
+                <input id="studentDept" name="studentDept" type="text" value="" class="form-control" disabled="disabled" />
+            </div>
+
+
+            <input type="hidden" id="studentId" name="studentId" />
+
+
+        </div>
+        <div style="margin-left: 100px;">
+            <table id="" class="display table table-bordered table-hover" cellspacing="1" width="400px">
+                <thead>
+                    <tr class="table-primary">
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Grade</th>
+
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody" class="table-dark"></tbody>
+
+            </table>
+        </div>
+        
+    </div>
+
+}
+
+
+@section scripts
+{
+
+    <script>
+        function test() {
+            
+        }
+    </script>
+
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    @*<script src="~/Scripts/jquery-ui-1.12.0.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+                var studentId = $("#StudentId").val();
+                $("#studentId").val(studentId);
+                $("#studentName").val("");
+                $("#studentEmail").val("");
+                $("#studentDept").val("");
+                $("#tableBody").empty();
+                var json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetStudentById',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#studentName").val(value.Name);
+                            $("#studentEmail").val(value.Email);
+                            $("#studentDept").val(value.DeptName);
+                        });
+                    }
+                });
+                json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetCourseResultByStudentId',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#tableBody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.Grade + '</td></tr>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

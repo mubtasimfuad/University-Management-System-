@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "SaveResult";
+    List<SelectListItem> students = ViewBag.Students;
+    List<SelectListItem> grades = ViewBag.Grades;
+    string message = ViewBag.message;
+}
+
+
+
+@model UniversityManagementSystemWebApp.Models.CourseEnrollment
+<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+
+@if (message == "yes")
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> Result Saved Successfully.
+    </div>
+}
+else if (message == "no")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> Result Saving Failed.
+    </div>
+}
+
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "FromResultSave" }))
+{
+    <div style="margin-left: 425px;">
+        <h1 style="font-size: 25px;">Save Result</h1>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.StudentId)
+            @Html.DropDownListFor(m => m.StudentId, new SelectList(students, "Value", "Text"), "-- Select Student --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.StudentId)
+
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="studentName">Name</label>
+            <input id="studentName" name="studentName" type="text" class="form-control" disabled="disabled" />
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="studentEmail">Email</label>
+            <input id="studentEmail" name="studentEmail" type="text" class="form-control" disabled="disabled" />
+        </div>
+
+        <div class="form-group">
+
+            <label for="studentDept">Department</label>
+            <input id="studentDept" name="studentDept" type="text" value="" disabled="disabled" class="form-control" />
+        </div>
+
+        <div class="form-group">
+
+            <label for="CourseId">Select Course :</label>
+            <select class="form-control disabled" id="CourseId" name="CourseId"></select>
+
+        </div>
+
+
+
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Grade)
+            @Html.DropDownListFor(m => m.Grade, new SelectList(grades, "Value", "Text"), "-- Select Grade --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Grade)
+
+        </div>
+
+
+
+
+
+        <button type="submit" class="btn btn-primary" value="save" style="width: 100px;">Save</button>
+    </div>
+
+}
+
+
+@section scripts
+{
+
+
+
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    @*<script src="~/Scripts/jquery-ui-1.12.0.js"></script>*@
+
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#FromResultSave").validate({
+                rules: {
+                    StudentId: "required",
+                    CourseId: "required",
+                    Grade: "required"
+                },
+                messages: {
+                }
+            });
+        });
+    </script>
+
+ <script>
+
+        $(document).ready(function () {
+            $("#StudentId").change(function () {
+                var studentId = $("#StudentId").val();
+                $("#studentName").val("");
+                $("#studentEmail").val("");
+                $("#studentDept").val("");
+                $("#CourseId").empty();
+                var json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetStudentById',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#studentName").val(value.Name);
+                            $("#studentEmail").val(value.Email);
+                            $("#studentDept").val(value.DeptName);
+                        });
+                    }
+                });
+                json = { studentId: studentId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Student/GetCourseThatAreTakenByStudentId',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#CourseId").append('<option value="">--Select a Course--</option>');
+                        $.each(data, function (key, value) {
+                            $("#CourseId").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

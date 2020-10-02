@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "AllocateClassrooms";
+    string message = ViewBag.message;
+}
+@model UniversityManagementSystemWebApp.Models.ClassAllocation
+
+
+@if (message == "yes")
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> Class Room Allocated Save Successfully.
+    </div>
+}
+else if (message == "no")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Failed!</strong> Class Room Allocated Failed.
+    </div>
+}
+else if (message == "conflict")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Warning!</strong> The selected classroom is already allocated for another course during the selected time period.The selected course is already scheduled in another classroom during the selected time period.
+    </div>
+}
+else if (message == "invalid time")
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Warning!</strong> Selected Time duration is invalid. A class can not start at @ViewBag.From and end at @ViewBag.To
+    </div>
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "allocationFrom" }))
+{
+    <div style="margin-left: 425px;">
+        <h1 style="font-size: 25px;"> Allocate Classroom</h1>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DepartmentId)
+            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(@ViewBag.departments, "Value", "Text"), 
+            "-- Select Department --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DepartmentId)
+
+
+        </div>
+
+        <div class="form-group">
+            <label for="CourseId">Select Course :</label>
+            <select class="form-control disabled" id="CourseId" name="CourseId"></select>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.RoomNo)
+            @Html.DropDownListFor(m => m.RoomNo, new SelectList(@ViewBag.RoomNo, "Value", "Text"),
+            "-- Select Room No --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.RoomNo)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Day)
+            @Html.DropDownListFor(m => m.Day, new SelectList(@ViewBag.Day, "Value", "Text"),
+            "-- Select a Day --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Day)
+        </div>
+
+
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td><label for="FromHour"> From:</label></td>
+                    <td><input type="text" id="FromHour" name="FromHour" class="form-control" placeholder="Hr" style="width: 50px; margin-left: 10px;" /></td>
+                    <td>&nbsp;&nbsp;:</td>
+                    <td><input type="text" id="FromMin" name="FromMin" class="form-control" placeholder="Min" style="width: 50px; margin-left: 10px;" /></td>
+                    <td><input type="radio" id="FromAmPm" name="FromAmPm" value="am" style="margin-left: 10px;" /> am&nbsp;&nbsp;</td>
+                    <td><input type="radio" id="FromAmPm" name="FromAmPm" value="pm" /> pm </td>
+
+                    <td><label class="error" for="FromHour"  style="margin-left: 10px; font-weight: normal;"></label></td>
+                    <td><label for="FromMin"  class="error" style="margin-left: 10px; font-weight: normal;"></label></td>
+                    <td><label for="FromAmPm"  class="error" style="margin-left: 10px; font-weight: normal;"></label></td>
+                </tr>
+            </table>
+
+
+
+
+        </div>
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td><label for="ToHour"> To:</label></td>
+                    <td><input type="text" id="ToHour" name="ToHour" class="form-control" placeholder="Hr" style="width: 50px; margin-left: 31px;" /></td>
+                    <td>&nbsp;&nbsp;:</td>
+                    <td><input type="text" id="ToMin" name="ToMin" class="form-control" placeholder="Min" style="width: 50px; margin-left: 10px;" /></td>
+                    <td><input type="radio" id="ToAmPm" name="ToAmPm" value="am" style="margin-left: 10px;" /> am&nbsp;&nbsp;</td>
+                    <td><input type="radio" id="ToAmPm" name="ToAmPm" value="pm" /> pm </td>
+
+                    <td><label for="ToHour"  class="error" style="margin-left: 10px; font-weight: normal;"></label></td>
+                    <td><label for="ToMin"  class="error" style="margin-left: 10px; font-weight: normal;"></label></td>
+                    <td><label for="ToAmPm"  class="error" style="margin-left: 10px; font-weight: normal;"></label></td>
+
+                </tr>
+            </table>
+
+        </div>
+        <button type="submit" class="btn btn-primary" value="save" style="width: 110px;">Allocate</button>
+    </div>
+  
+}
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#allocationFrom").validate({
+                rules: {
+                    CourseId: "required",
+                    FromHour: {
+                        required: true,
+                        range: [1, 12]
+                    },
+                    FromMin: {
+                        required: true,
+                        range: [0, 59]
+                    },
+                    FromAmPm: "required",
+                    ToHour: {
+                        required: true,
+                        range: [1, 12]
+                    },
+                    ToMin: {
+                        required: true,
+                        range: [0, 59]
+                    },
+                    ToAmPm: "required"
+                },
+                messages: {
+                    FromHour: {
+                        required: "Input a Hour.  ",
+                        range: "Hour Must Be 1 to 12.  "
+                    },
+                    FromMin: {
+                        required: "Input a Minute.  ",
+                        range: "Minute Must Be 00 to 59.  "
+                    },
+                    FromAmPm: " Select am/pm.",
+                    ToHour: {
+                        required: "Input a Hour.  ",
+                        range: "Hour Must Be 1 to 12.  "
+                    },
+                    ToMin: {
+                        required: "Input a Minute.  ",
+                        range: "Minute Must Be 00 to 59.  "
+                    },
+                    ToAmPm: " Select am/pm."
+                }
+            });
+
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            $("#DepartmentId").change(function() {
+                var deptId = $("#DepartmentId").val();
+                $("#CourseId").empty();
+                var json = { departmentId: deptId };
+                $.ajax({
+                    type: "POST",
+                    url: '/Course/GetCoursesByDepartmentId',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function(data) {
+                        $("#CourseId").append('<option value="">--Select a Course--</option>');
+                        $.each(data, function(key, value) {
+                            $("#CourseId").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+}
